@@ -1,0 +1,29 @@
+name: Deprovision Lab
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  SUBSCRIPTION_ID: "xxx-xxx-xxx"
+  DOMAIN: "xxx.com"
+  LAB_NAME: "lab8"
+  LAB_USER_COUNT: 2
+
+jobs:
+  provision_lab:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/CLI@v1
+
+    - name: Run provision_lab.ps1
+      shell: pwsh
+      run: |
+        ./deprovision_lab.ps1 -subscriptionId ${{ env.SUBSCRIPTION_ID }} -domain ${{ env.DOMAIN }} -labName ${{ env.LAB_NAME }} -labUserCount ${{ env.LAB_USER_COUNT }}
