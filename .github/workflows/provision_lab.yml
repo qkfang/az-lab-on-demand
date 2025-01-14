@@ -5,12 +5,22 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      SUBSCRIPTION_ID: 
+        required: true
+        default: "xxx-xxx-xxx"
 
-env:
-  SUBSCRIPTION_ID: "xxx-xxx-xxx"
-  DOMAIN: "xxx.com"
-  LAB_NAME: "lab8"
-  LAB_USER_COUNT: 2
+      DOMAIN: 
+        required: true
+        default: "xxx.com"
+
+      LAB_NAME: 
+        required: true
+        default: 'lab1'
+
+      LAB_USER_COUNT: 
+        required: true
+        default: 2
 
 jobs:
   provision_lab:
@@ -26,4 +36,11 @@ jobs:
     - name: Run provision_lab.ps1
       shell: pwsh
       run: |
-        ./provision_lab.ps1 -subscriptionId ${{ env.SUBSCRIPTION_ID }} -domain ${{ env.DOMAIN }} -labName ${{ env.LAB_NAME }} -labUserCount ${{ env.LAB_USER_COUNT }}
+        ./provision_lab.ps1 `
+          -subscriptionId ${{ github.event.inputs.SUBSCRIPTION_ID }} `
+          -domain ${{ github.event.inputs.DOMAIN }} `
+          -labName ${{ github.event.inputs.LAB_NAME }} `
+          -labUserCount ${{ github.event.inputs.LAB_USER_COUNT }}
+
+
+          
