@@ -26,6 +26,9 @@ jobs:
 
     - name: Set up Azure CLI
       uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az --version
 
     - name: Run provision_lab.ps1
       shell: pwsh
